@@ -1,0 +1,35 @@
+# Sample information
+SAMPLES:
+  - "Sample_1"
+  - "Sample_2"
+  - "Sample_3"
+  - "Sample_4"
+
+LANE: "L001"
+RG_NAME: "PROJECT_NAME"
+
+# Adapter sequences
+ADAPTER_3_PRIME: "AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC"
+ADAPTER_5_PRIME: "ATCTCGTATGCCGTCTTCTGCTTG"
+
+# 3SEQ-tools parameters
+N: "5"
+G: "3"
+A: "8"
+M: "1"
+
+# Reference info
+REF_GENOME: "../data/references/genome.fa"
+GTF: "../data/references/annotation.gtf"
+STAR_DIR: "../data/references/star_ref"
+TEMP_DIR: "../data/references/_STARtmp"
+
+#SOFTWARE
+THREE_SEQ_TOOLS_DIR: "./3SEQtools"
+
+# CPU information
+RAM: 25 # Gigabyes
+THREADS: 2
+
+# Project directory
+PROJECT_DIR: "../data/"
