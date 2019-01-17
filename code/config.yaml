@@ -9,14 +9,14 @@ LANE: "L001"
 RG_NAME: "PROJECT_NAME"
 
 # Adapter sequences
-ADAPTER_3_PRIME: "AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC"
+ADAPTER_3_PRIME: "AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC" 
 ADAPTER_5_PRIME: "ATCTCGTATGCCGTCTTCTGCTTG"
 
 # 3SEQ-tools parameters
-N: "5"
-G: "3"
-A: "8"
-M: "1"
+N: "5"  # Length of UMI
+G: "3"  # Length of G-overhang
+A: "8"  # Minimum length of homopolymer detection
+M: "1"  # Number of mismatches allowed
 
 # Reference info
 REF_GENOME: "../data/references/genome.fa"
@@ -28,8 +28,8 @@ TEMP_DIR: "../data/references/_STARtmp"
 THREE_SEQ_TOOLS_DIR: "./3SEQtools"
 
 # CPU information
-RAM: 25 # Gigabyes
-THREADS: 2
+RAM: "2147483648"
 
 # Project directory
-PROJECT_DIR: "../data/"
+FASTQ_DIR: "../data/fastq"
+PROJECT_DIR: "../output/"
