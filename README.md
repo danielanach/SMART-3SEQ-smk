@@ -3,7 +3,7 @@
 Snakemake workflow for sequencing data produced using SMART-3Seq method. This method is designed for RNA-seq from archival tissue, created by [J. Foley et al](https://www.biorxiv.org/content/10.1101/207340v4).
 
 
-
+## Note: Installation instructions still incomplete 
 
 
 Install dependencies:
