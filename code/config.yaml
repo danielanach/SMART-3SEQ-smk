@@ -5,7 +5,10 @@ SAMPLES:
   - "Sample_3"
   - "Sample_4"
 
+# Lane number which matches your fastq file
 LANE: "L001"
+
+# Read group names to use in bam files
 RG_NAME: "PROJECT_NAME"
 
 # Adapter sequences
@@ -24,7 +27,7 @@ GTF: "../data/references/annotation.gtf"
 STAR_DIR: "../data/references/star_ref"
 TEMP_DIR: "../data/references/_STARtmp"
 
-#SOFTWARE
+# Additional software
 THREE_SEQ_TOOLS_DIR: "./3SEQtools"
 
 # CPU information
