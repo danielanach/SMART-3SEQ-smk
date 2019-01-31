@@ -1,6 +1,6 @@
 # SMART-3SEQ SNAKEMAKE WORKFLOW
 
-Add a description for this project here.
+Snakemake workflow for sequencing data produced using SMART-3Seq method. This method is designed for RNA-seq from archival tissue, created by [J. Foley et al](https://www.biorxiv.org/content/10.1101/207340v4).
 
 
 
@@ -11,15 +11,13 @@ Install dependencies:
 cd PROJECT_DIR
 spro enter
 spro install
+``` 
+  
+Clone 3SEQ tools repositories for UMI-handling tools.
 ```
-
-(get the 3seqtools instructions)
-```
-git clone 3SEQtools
-```
-
-```
-git clone UMI dedup
+cd code/
+git clone https://github.com/jwfoley/3SEQtools.git
+git clone https://github.com/jwfoley/umi-dedup.git
 ```
 
 ### Recommended file structure pre-analysis
@@ -27,7 +25,9 @@ git clone UMI dedup
 PROJECT_DIR/      
 │── code        
 │&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│── pipeline.smk    
-│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── config.yaml       
+│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│── config.yaml  
+│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│── 3SEQtools/  
+│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── umi-dedup/       
 │── environment   
 │&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── conda environment (no need to touch)   
 │── data    
