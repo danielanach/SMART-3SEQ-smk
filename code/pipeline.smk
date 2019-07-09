@@ -20,6 +20,8 @@ G=config["G"] # Length of G-overhang
 A=config["A"] # Minimum length of homopolymer detection
 M=config["M"] # Number of mismatches allowed
 
+ML=config['ML'] # Minimum length of read after adapter trimming
+
 rule all:
     input:
         OUT_DIR + "/count_all/counts.txt",
@@ -33,8 +35,12 @@ rule TrimAdapter:
     message: "Trimming adapters from {input}."
     priority: 5
     shell:
+        "if [[ ! -e {OUT_DIR}/trimmed/ ]]; then "
+        "mkdir {OUT_DIR}/trimmed/; "
+        "fi"
+        "\n"
         "cutadapt "
-        "-a {A_3_PRIME} -g {A_5_PRIME} -m 1 "
+        "-a {A_3_PRIME} -g {A_5_PRIME} -m 5 "
         "-o {output} "
         "{input}"
 
@@ -59,6 +65,10 @@ rule AlignFastq:
     threads: 1
     message: "Aligning fastq with {threads} threads on the following files {input}."
     shell:
+        "if [[ ! -e {OUT_DIR}/bam/ ]]; then "
+        "mkdir {OUT_DIR}/bam/; "
+        "fi"
+        "\n"
         "STAR --genomeLoad LoadAndKeep --genomeDir {STAR_DIR} "
         "--outSAMtype BAM SortedByCoordinate --outStd BAM_SortedByCoordinate --limitBAMsortRAM {RAM} "
         "--outBAMcompression 0 --outFileNamePrefix {OUT_DIR}/logs/{wildcards.sample}  "
@@ -68,6 +78,7 @@ rule AlignFastq:
         "{output}"
         "\n"
         "samtools index {output}"
+
 rule RemoveGenome:
     input:
         expand(OUT_DIR + "/bam/{sample}.{lane}.bam",
@@ -77,6 +88,10 @@ rule RemoveGenome:
     output:
         OUT_DIR + "/logs/star_remove_genome.log"
     shell:
+        "if [[ ! -e {OUT_DIR}/logs/ ]]; then "
+        "mkdir {OUT_DIR}/logs/; "
+        "fi"
+        "\n"
         "STAR --genomeLoad Remove --genomeDir {STAR_DIR} > {output}"
 
 rule DeDup:
@@ -85,6 +100,10 @@ rule DeDup:
     output:
         OUT_DIR + "/dedup_bam/{sample}.{lane}.dedup.bam"
     shell:
+        "if [[ ! -e {OUT_DIR}/dedup_bam/ ]]; then "
+        "mkdir {OUT_DIR}/dedup_bam/; "
+        "fi"
+        "\n"
         "{THREE_SEQ}/umi-dedup/dedup.py -s {input} > {output}"
         "\n"
         "samtools index {output}"
