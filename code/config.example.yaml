@@ -44,3 +44,6 @@ THREADS: 2
 
 # Project directory
 PROJECT_DIR: "/scratch/dana/3seq_DCIS_reg"
+
+# Fastq directory
+FASTQ_DIR: "/scratch/dana/fastq"
