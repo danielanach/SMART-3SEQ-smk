@@ -1,0 +1,46 @@
+# Sample information
+SAMPLES:
+  - "RA-058-S6_S8"
+  - "RA1-S6-011_S9"
+  - "RA2-S5-011_S10"
+  - "RA-S6-016_S6"
+  - "RA-S6-018_S4"
+  - "RB-S6-016_S7"
+  - "RB-S6-018_S5"
+  - "RB-S6-031_S2"
+  - "RC-058-S6_S1"
+  - "RC-S6-031_S3"
+  - "RD-S6-57_S11"
+  - "RE-S6-57_S12"
+
+LANE: "L008"
+RG_NAME: "190604_DCIS_LCM_regions"
+
+# Adapter sequences
+ADAPTER_3_PRIME: "AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC"
+ADAPTER_5_PRIME: "ATCTCGTATGCCGTCTTCTGCTTG"
+
+# 3SEQ-tools parameters
+N: "5"
+G: "3"
+A: "8"
+M: "1"
+
+# Other parameters
+ML: "5"
+
+# Reference info
+REF_GENOME: "/scratch/dana/star_ref/GRCh38.primary_assembly.genome.fa"
+GTF: "/scratch/dana/star_ref/gencode.v26.primary_assembly.annotation.gtf"
+STAR_DIR: "/scratch/dana/star_ref"
+TEMP_DIR: "/scratch/dana/_STARtmp"
+
+#SOFTWARE
+THREE_SEQ: "/home/dnachman/SMART-3-Seq/code/3SEQtools"
+
+# CPU information
+RAM: 25 # Gigabtyes
+THREADS: 2
+
+# Project directory
+PROJECT_DIR: "/scratch/dana/3seq_DCIS_reg"
