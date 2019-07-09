@@ -86,18 +86,18 @@ snakemake --snakefile pipeline.smk --configfile config.yaml
 ### File structure post-analysis
 
 └── PROJECT_DIR/    
-&nbsp;│── trimmed  
-&nbsp;│&nbsp;│── sample.R1.trimmed.fastq (adapter trimmed)      
-&nbsp;│&nbsp;└── sample.R1.trimmed_umi.fastq (UMI polyAtrimmed)    
-&nbsp;│── bam   
-&nbsp;│&nbsp;│── sample.bam    
-&nbsp;│&nbsp;└── sample.bam.bai       
-&nbsp;│── dedup_bam     
-&nbsp;│&nbsp;│── sample.dedup.bam   
-&nbsp;│&nbsp;└── sample.dedup.bam.bai   
-&nbsp;│── logs   
-&nbsp;│&nbsp;│── sampleLog.final.out (STAR log)             
-&nbsp;│&nbsp;└── star_remove_genome.log  (STAR log)      
-&nbsp;└──  counts   
-&nbsp;&nbsp;│── counts.txt    
-&nbsp;&nbsp;└── counts.txt.summary  
+        │── trimmed  
+        │    │── sample.R1.trimmed.fastq (adapter trimmed)      
+        │    └── sample.R1.trimmed_umi.fastq (UMI polyAtrimmed)    
+        │── bam   
+        │    │── sample.bam    
+        │    └── sample.bam.bai       
+        │── dedup_bam     
+        │    │── sample.dedup.bam   
+        │    └── sample.dedup.bam.bai   
+        │── logs   
+        │    │── sampleLog.final.out (STAR log)             
+        │    └── star_remove_genome.log  (STAR log)      
+        └──  counts   
+                │── counts.txt    
+                └── counts.txt.summary  
