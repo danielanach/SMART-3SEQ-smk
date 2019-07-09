@@ -20,7 +20,7 @@ G=config["G"] # Length of G-overhang
 A=config["A"] # Minimum length of homopolymer detection
 M=config["M"] # Number of mismatches allowed
 
-ML=config['ML'] # Minimum length of read after adapter trimming
+ML=config["ML"] # Minimum length of read after adapter trimming
 
 rule all:
     input:
@@ -40,7 +40,7 @@ rule TrimAdapter:
         "fi"
         "\n"
         "cutadapt "
-        "-a {A_3_PRIME} -g {A_5_PRIME} -m 5 "
+        "-a {A_3_PRIME} -g {A_5_PRIME} -m {ML} "
         "-o {output} "
         "{input}"
 
