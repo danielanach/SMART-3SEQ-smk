@@ -11,9 +11,8 @@ STAR_DIR=config["STAR_DIR"]
 
 THREE_SEQ=config["THREE_SEQ"]
 
-RAM=config["RAM"]
+RAM="2147483648"
 
-FASTQ_DIR=config["FASTQ_DIR"]
 OUT_DIR=config["PROJECT_DIR"]
 
 N=config["N"] # Length of UMI
@@ -25,16 +24,16 @@ ML=config['ML'] # Minimum length of read after adapter trimming
 
 rule all:
     input:
-        OUT_DIR + "/counts/counts.txt",
+        OUT_DIR + "/count_all/counts.txt",
         OUT_DIR + "/logs/star_remove_genome.log"
 
 rule TrimAdapter:
     input:
-        FASTQ_DIR + "/{sample}_{lane}_R1_001.fastq.gz"
+        OUT_DIR + "/fastq/{sample}_{lane}_R1_001.fastq.gz"
     output:
         OUT_DIR + "/trimmed/{sample}.{lane}.trimmed.fastq.gz"
     message: "Trimming adapters from {input}."
-    priority: 6
+    priority: 5
     shell:
         "if [[ ! -e {OUT_DIR}/trimmed/ ]]; then "
         "mkdir {OUT_DIR}/trimmed/; "
@@ -51,7 +50,7 @@ rule TrimHomoPolymer_MoveUMI:
     output:
         OUT_DIR + "/trimmed/{sample}.{lane}.trimmed_umi.fastq"
     message: "Remove poly(A) tail, discard G overhang, move UMI for {input}."
-    priority: 5
+    priority: 4
     shell:
         "gunzip {input} -c | "
         "python {THREE_SEQ}/umi_homopolymer.py "
@@ -64,15 +63,10 @@ rule AlignFastq:
     output:
         OUT_DIR + "/bam/{sample}.{lane}.bam"
     threads: 1
-    priority: 4
     message: "Aligning fastq with {threads} threads on the following files {input}."
     shell:
         "if [[ ! -e {OUT_DIR}/bam/ ]]; then "
         "mkdir {OUT_DIR}/bam/; "
-        "fi"
-        "\n"
-        "if [[ ! -e {OUT_DIR}/logs/ ]]; then "
-        "mkdir {OUT_DIR}/logs/; "
         "fi"
         "\n"
         "STAR --genomeLoad LoadAndKeep --genomeDir {STAR_DIR} "
@@ -90,9 +84,9 @@ rule RemoveGenome:
         expand(OUT_DIR + "/bam/{sample}.{lane}.bam",
             sample=SAMPLES,
             lane=LANE)
+    priority: 1
     output:
         OUT_DIR + "/logs/star_remove_genome.log"
-    priority: 3
     shell:
         "if [[ ! -e {OUT_DIR}/logs/ ]]; then "
         "mkdir {OUT_DIR}/logs/; "
@@ -105,7 +99,6 @@ rule DeDup:
         OUT_DIR + "/bam/{sample}.{lane}.bam"
     output:
         OUT_DIR + "/dedup_bam/{sample}.{lane}.dedup.bam"
-    priority: 2
     shell:
         "if [[ ! -e {OUT_DIR}/dedup_bam/ ]]; then "
         "mkdir {OUT_DIR}/dedup_bam/; "
@@ -121,11 +114,10 @@ rule FeatureCounts:
              sample=SAMPLES,
              lane=LANE)
     output:
-        OUT_DIR + "/counts/counts.txt"
-    priority: 1
+        OUT_DIR + "/count_all/counts.txt"
     shell:
-        "if [[ ! -e {OUT_DIR}/counts/ ]]; then "
-        "mkdir {OUT_DIR}/counts/; "
+        "if [[ ! -e {OUT_DIR}/count_all/ ]]; then "
+        "mkdir {OUT_DIR}/count_all/; "
         "fi"
         "\n"
         "featureCounts "
