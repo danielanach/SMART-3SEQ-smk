@@ -3,27 +3,28 @@
 Snakemake workflow, environment and analysis file structure for sequencing data produced using SMART-3Seq method. The SMART-3Seq method is designed for RNA-seq from archival tissue, as well as from laser-capture microdissected tissue, created by [J. Foley et al](https://www.biorxiv.org/content/10.1101/207340v4).
 
 
-## Note: Installation instructions still incomplete 
+## Installation
 
-This project uses [spro](https://spro.io/) as a project manager.
+Clone this repository:
 ```
-pip install spro
-```
-
-Create your project from the template provided in this repo.
-```
-spro create -g https://github.com/danielanach/SMART-3SEQ-smk.git PROJECT_NAME
+git clone https://github.com/danielanach/SMART-3SEQ-smk.git
+cd SMART-3SEQ-smk
 ```
 
-Install dependencies:
+This project uses conda as an environment manager.
+
+Create an environment and install dependencies:
 ```
-cd PROJECT_NAME
+conda env create -f environment.yml
+```
 
-spro enter
+### NOTE: current environment has a lot of fluff that can be shaved off.
 
-spro install
-``` 
-  
+Enter environment:
+```
+conda activate smart-3seq
+```
+
 Clone 3SEQtools repositories for UMI-handling tools.
 ```
 cd code/
@@ -49,7 +50,7 @@ LANE: "L001"
 RG_NAME: "PROJECT_NAME"
 
 # Adapter sequences
-ADAPTER_3_PRIME: "AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC" 
+ADAPTER_3_PRIME: "AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC"
 ADAPTER_5_PRIME: "ATCTCGTATGCCGTCTTCTGCTTG"
 
 # 3SEQ-tools parameters
