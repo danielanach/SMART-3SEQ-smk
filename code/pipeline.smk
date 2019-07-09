@@ -14,6 +14,7 @@ THREE_SEQ=config["THREE_SEQ"]
 RAM="2147483648"
 
 OUT_DIR=config["PROJECT_DIR"]
+FASTQ_DIR=config["FASTQ_DIR"]
 
 N=config["N"] # Length of UMI
 G=config["G"] # Length of G-overhang
@@ -29,7 +30,7 @@ rule all:
 
 rule TrimAdapter:
     input:
-        OUT_DIR + "/fastq/{sample}_{lane}_R1_001.fastq.gz"
+        "{FASTQ_DIR}/{sample}_{lane}_R1_001.fastq.gz"
     output:
         OUT_DIR + "/trimmed/{sample}.{lane}.trimmed.fastq.gz"
     message: "Trimming adapters from {input}."
