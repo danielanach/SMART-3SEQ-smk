@@ -1,4 +1,4 @@
-name: null
+name: smart-3seq
 channels:
   - conda-forge
   - bioconda
@@ -151,5 +151,3 @@ dependencies:
   - mkl=2019.1=144
   - numpy=1.15.4=py36h7e9f1db_0
   - numpy-base=1.15.4=py36hde5b4d6_0
-prefix: /home/dnachman/SMART-3-Seq/environment
-
