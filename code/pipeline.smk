@@ -25,7 +25,7 @@ ML=config["ML"] # Minimum length of read after adapter trimming
 
 rule all:
     input:
-        OUT_DIR + "/count_all/counts.txt",
+        OUT_DIR + "/counts/counts.txt",
         OUT_DIR + "/logs/star_remove_genome.log"
 
 rule TrimAdapter:
@@ -113,10 +113,10 @@ rule FeatureCounts:
         expand(OUT_DIR + "/dedup_bam/{sample}.dedup.bam",
              sample=SAMPLES)
     output:
-        OUT_DIR + "/count_all/counts.txt"
+        OUT_DIR + "/counts/counts.txt"
     shell:
-        "if [[ ! -e {OUT_DIR}/count_all/ ]]; then "
-        "mkdir {OUT_DIR}/count_all/; "
+        "if [[ ! -e {OUT_DIR}/counts/ ]]; then "
+        "mkdir {OUT_DIR}/counts/; "
         "fi"
         "\n"
         "featureCounts "
