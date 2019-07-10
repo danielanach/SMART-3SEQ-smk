@@ -1,5 +1,4 @@
 SAMPLES=config["SAMPLES"]
-LANE=config["LANE"] #Need to support multiple lane
 RG=config["RG_NAME"]
 
 A_3_PRIME=config["ADAPTER_3_PRIME"]
@@ -10,8 +9,9 @@ GTF=config["GTF"]
 STAR_DIR=config["STAR_DIR"]
 
 THREE_SEQ=config["THREE_SEQ"]
+UMI_TOOLS=config["UMI_TOOLS"]
 
-RAM="2147483648"
+RAM=config['RAM']
 
 OUT_DIR=config["PROJECT_DIR"]
 FASTQ_DIR=config["FASTQ_DIR"]
@@ -30,9 +30,9 @@ rule all:
 
 rule TrimAdapter:
     input:
-        "{FASTQ_DIR}/{sample}_{lane}_R1_001.fastq.gz"
+        FASTQ_DIR + "/{sample}.fastq.gz"
     output:
-        OUT_DIR + "/trimmed/{sample}.{lane}.trimmed.fastq.gz"
+        OUT_DIR + "/trimmed/{sample}.trimmed.fastq.gz"
     message: "Trimming adapters from {input}."
     priority: 5
     shell:
@@ -47,9 +47,9 @@ rule TrimAdapter:
 
 rule TrimHomoPolymer_MoveUMI:
     input:
-        OUT_DIR + "/trimmed/{sample}.{lane}.trimmed.fastq.gz"
+        OUT_DIR + "/trimmed/{sample}.trimmed.fastq.gz"
     output:
-        OUT_DIR + "/trimmed/{sample}.{lane}.trimmed_umi.fastq"
+        OUT_DIR + "/trimmed/{sample}.trimmed_umi.fastq"
     message: "Remove poly(A) tail, discard G overhang, move UMI for {input}."
     priority: 4
     shell:
@@ -60,14 +60,18 @@ rule TrimHomoPolymer_MoveUMI:
 
 rule AlignFastq:
     input:
-        OUT_DIR + "/trimmed/{sample}.{lane}.trimmed_umi.fastq"
+        OUT_DIR + "/trimmed/{sample}.trimmed_umi.fastq"
     output:
-        OUT_DIR + "/bam/{sample}.{lane}.bam"
+        OUT_DIR + "/bam/{sample}.bam"
     threads: 1
     message: "Aligning fastq with {threads} threads on the following files {input}."
     shell:
         "if [[ ! -e {OUT_DIR}/bam/ ]]; then "
         "mkdir {OUT_DIR}/bam/; "
+        "fi"
+        "\n"
+        "if [[ ! -e {OUT_DIR}/logs/ ]]; then "
+        "mkdir {OUT_DIR}/logs/; "
         "fi"
         "\n"
         "STAR --genomeLoad LoadAndKeep --genomeDir {STAR_DIR} "
@@ -82,38 +86,32 @@ rule AlignFastq:
 
 rule RemoveGenome:
     input:
-        expand(OUT_DIR + "/bam/{sample}.{lane}.bam",
-            sample=SAMPLES,
-            lane=LANE)
+        expand(OUT_DIR + "/bam/{sample}.bam",
+            sample=SAMPLES)
     priority: 1
     output:
         OUT_DIR + "/logs/star_remove_genome.log"
     shell:
-        "if [[ ! -e {OUT_DIR}/logs/ ]]; then "
-        "mkdir {OUT_DIR}/logs/; "
-        "fi"
-        "\n"
         "STAR --genomeLoad Remove --genomeDir {STAR_DIR} > {output}"
 
 rule DeDup:
     input:
-        OUT_DIR + "/bam/{sample}.{lane}.bam"
+        OUT_DIR + "/bam/{sample}.bam"
     output:
-        OUT_DIR + "/dedup_bam/{sample}.{lane}.dedup.bam"
+        OUT_DIR + "/dedup_bam/{sample}.dedup.bam"
     shell:
         "if [[ ! -e {OUT_DIR}/dedup_bam/ ]]; then "
         "mkdir {OUT_DIR}/dedup_bam/; "
         "fi"
         "\n"
-        "{THREE_SEQ}/umi-dedup/dedup.py -s {input} > {output}"
+        "{UMI_TOOLS}/dedup.py -s {input} > {output}"
         "\n"
         "samtools index {output}"
 
 rule FeatureCounts:
     input:
-        expand(OUT_DIR + "/dedup_bam/{sample}.{lane}.dedup.bam",
-             sample=SAMPLES,
-             lane=LANE)
+        expand(OUT_DIR + "/dedup_bam/{sample}.dedup.bam",
+             sample=SAMPLES)
     output:
         OUT_DIR + "/count_all/counts.txt"
     shell:
