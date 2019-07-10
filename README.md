@@ -44,9 +44,6 @@ SAMPLES:
   - "Sample_3"
   - "Sample_4"
 
-# Lane number which matches your fastq file
-LANE: "L001"
-
 # Read group names to use in bam files
 RG_NAME: "PROJECT_NAME"
 
@@ -60,27 +57,33 @@ G: "3"  # Length of G-overhang
 A: "8"  # Minimum length of homopolymer detection
 M: "1"  # Number of mismatches allowed
 
-# Reference info
-REF_GENOME: "../data/references/genome.fa"
-GTF: "../data/references/annotation.gtf"
-STAR_DIR: "../data/references/star_ref"
-TEMP_DIR: "../data/references/_STARtmp"
+# Other parameters
+ML: "5" # Minimum length read after adapter trimming
 
-# Additional software
-THREE_SEQ_TOOLS_DIR: "./3SEQtools"
+# Reference info
+REF_GENOME: "/path/genome.fa"
+GTF: "/path/annotation.gtf"
+STAR_DIR: "/path/star_directory"
+TEMP_DIR: "/path/_STARtmp"
+
+# Software
+THREE_SEQ: "./3SEQtools"
+UMI_TOOLS: "./umi-dedup"
 
 # CPU information
-RAM: "2147483648"
+RAM: "2000000000"
 
-# Project directory
-FASTQ_DIR: "../data/fastq"
-PROJECT_DIR: "../output/"
+# Project directory, must exist
+PROJECT_DIR: "/path/output"
+
+# Fastq directory which contains fastq.gz files corresponding to SAMPLES
+FASTQ_DIR: "/scratch/dana/3seq_DCIS_reg/fastq"
 ```
 
 ## Execute pipeline
 
 ```
-snakemake --snakefile pipeline.smk --configfile config.yaml
+snakemake --snakefile pipeline.smk --configfile config.yaml -j #_of_cores
 ```
 
 ### File structure post-analysis
@@ -96,7 +99,10 @@ snakemake --snakefile pipeline.smk --configfile config.yaml
         │    │── sample.dedup.bam   
         │    └── sample.dedup.bam.bai   
         │── logs   
-        │    │── sampleLog.final.out (STAR log)             
+        │    │── sampleLog.final.out (STAR log)  
+        │    │── sampleLog.progress.out (STAR log)             
+        │    │── sampleLog.std.out (STAR log)
+        │    │── sampleLog.out.tab (STAR log)         
         │    └── star_remove_genome.log  (STAR log)      
         └──  counts   
                 │── counts.txt    
