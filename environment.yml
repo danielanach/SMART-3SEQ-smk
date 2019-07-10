@@ -1,4 +1,4 @@
-name: smart-3seq.3
+name: smart-3seq
 channels:
   - conda-forge
   - bioconda
