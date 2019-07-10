@@ -35,4 +35,4 @@ RAM: "2000000000"
 PROJECT_DIR: "/scratch/dana/example/3seq_DCIS_reg"
 
 # Fastq directory
-FASTQ_DIR: "/scratch/dana/3seq_DCIS_reg/fastq"
+FASTQ_DIR: "/scratch/dana/example/3seq_DCIS_reg/fastq"
