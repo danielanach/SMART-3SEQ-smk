@@ -18,8 +18,6 @@ Create an environment and install dependencies:
 conda env create -f environment.yml
 ```
 
-#### NOTE: current environment has a lot of fluff that can be shaved off.
-
 Enter environment:
 ```
 conda activate smart-3seq
@@ -101,7 +99,7 @@ snakemake --snakefile pipeline.smk --configfile config.yaml -j #_of_cores
         │── logs   
         │    │── sampleLog.final.out (STAR log)  
         │    │── sampleLog.progress.out (STAR log)             
-        │    │── sampleLog.std.out (STAR log)
+        │    │── sampleLog.std.out (STAR log)         
         │    │── sampleLog.out.tab (STAR log)         
         │    └── star_remove_genome.log  (STAR log)      
         └──  counts   
