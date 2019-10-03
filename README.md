@@ -1,4 +1,4 @@
-# SMART-3SEQ SNAKEMAKE WORKFLOW
+# SMART-3SEQ SNAKEMAKE WORKFLOW v1.0
 
 Snakemake workflow, environment and analysis file structure for sequencing data produced using SMART-3Seq method. The SMART-3Seq method is designed for RNA-seq from archival tissue, as well as from laser-capture microdissected tissue, created by [J. Foley et al](https://www.biorxiv.org/content/10.1101/207340v4).
 
