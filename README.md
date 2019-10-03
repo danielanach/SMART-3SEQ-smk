@@ -32,6 +32,15 @@ git clone https://github.com/jwfoley/3SEQtools.git
 git clone https://github.com/jwfoley/umi-dedup.git
 ```
 
+## Obtain required reference files
+
+You can download GTF files and FASTA files from [here](https://www.gencodegenes.org/human/).
+
+You need the reference genome indexed for the STAR aligner. There are some pre-made STAR indexed genomes [here](http://labshare.cshl.edu/shares/gingeraslab/www-data/dobin/STAR/STARgenomes/). I’d recommend one under the “GENCODE” directory so that there is gene annotation.
+
+If you'd like to generate your own, follow the instructions in the [STAR manual](http://labshare.cshl.edu/shares/gingeraslab/www-data/dobin/STAR/STAR.posix/doc/STARmanual.pdf) under "2 Generating genome indexes.” 
+
+
 ## Configure snakemake yaml
 Edit config.yaml for your sequencing run specific details.
 ```
