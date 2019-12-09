@@ -1,3 +1,4 @@
+PROJECT=config["PROJECT"]
 SAMPLES=config["SAMPLES"]
 RG=config["RG_NAME"]
 
@@ -113,7 +114,7 @@ rule FeatureCounts:
         expand(OUT_DIR + "/dedup_bam/{sample}.dedup.bam",
              sample=SAMPLES)
     output:
-        OUT_DIR + "/counts/counts.txt"
+        OUT_DIR + "/counts/" + PROJECT + "_counts.txt"
     shell:
         "if [[ ! -e {OUT_DIR}/counts/ ]]; then "
         "mkdir {OUT_DIR}/counts/; "
